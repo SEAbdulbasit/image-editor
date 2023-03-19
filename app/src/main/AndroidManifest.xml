@@ -20,16 +20,26 @@
 
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
+
+        <activity
+            android:name="com.burhanrashid52.pickermaker.ImageEditorActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.burhanrashid52.pickermaker.DirectoryActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.stickermaker.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.burhanrashid52.photoediting.EditImageActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <intent-filter
                 android:label="@string/app_intent_name"

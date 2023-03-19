@@ -36,6 +36,7 @@ import com.burhanrashid52.photoediting.filters.FilterViewAdapter
 import com.burhanrashid52.photoediting.tools.EditingToolsAdapter
 import com.burhanrashid52.photoediting.tools.EditingToolsAdapter.OnItemSelected
 import com.burhanrashid52.photoediting.tools.ToolType
+import com.burhanrashid52.pickermaker.IMAGE_BITMAP
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener
 import ja.burhanrashid52.photoeditor.PhotoEditor
@@ -47,6 +48,7 @@ import ja.burhanrashid52.photoeditor.TextStyleBuilder
 import ja.burhanrashid52.photoeditor.ViewType
 import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
 import ja.burhanrashid52.photoeditor.shape.ShapeType
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
@@ -77,6 +79,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
 
     private lateinit var mSaveFileHelper: FileSaveHelper
 
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeFullScreen()
@@ -120,9 +123,27 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         mPhotoEditor.setOnPhotoEditorListener(this)
 
         //Set Image Dynamically
-        mPhotoEditorView.source.setImageResource(R.drawable.paris_tower)
+        val imageUri = Uri.parse(intent.getStringExtra(IMAGE_BITMAP))
 
+        mPhotoEditorView.source.setImageBitmap(
+            MediaStore.Images.Media.getBitmap(
+                applicationContext.contentResolver,
+                imageUri
+            )
+        )
         mSaveFileHelper = FileSaveHelper(this)
+
+        GlobalScope.launch {
+            val result = mPhotoEditor.saveAsFile(imageUri.path!!)
+            if (result is SaveFileResult.Success) {
+                showSnackbar("Image saved!")
+//                val editImageIntent = Intent(this, EditImageActivity::class.java)
+//                editImageIntent.putExtra(IMAGE_BITMAP, imageUri.toString())
+//                startActivity(editImageIntent)
+            } else {
+                showSnackbar("Couldn't save image")
+            }
+        }
     }
 
     private fun handleIntentImage(source: ImageView) {
@@ -140,6 +161,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                     e.printStackTrace()
                 }
             }
+
             else -> {
                 val intentType = intent.type
                 if (intentType != null && intentType.startsWith("image/")) {
@@ -235,6 +257,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(cameraIntent, CAMERA_REQUEST)
             }
+
             R.id.imgGallery -> {
                 val intent = Intent()
                 intent.type = "image/*"
@@ -319,8 +342,6 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         }
     }
 
-    // TODO(lucianocheng): Replace onActivityResult with Result API from Google
-    //                     See https://developer.android.com/training/basics/intents/result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -330,6 +351,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                     val photo = data?.extras?.get("data") as Bitmap?
                     mPhotoEditorView.source.setImageBitmap(photo)
                 }
+
                 PICK_REQUEST -> try {
                     mPhotoEditor.clearAllViews()
                     val uri = data?.data
@@ -403,6 +425,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 mTxtCurrentTool.setText(R.string.label_shape)
                 showBottomSheetDialogFragment(mShapeBSFragment)
             }
+
             ToolType.TEXT -> {
                 val textEditorDialogFragment = TextEditorDialogFragment.show(this)
                 textEditorDialogFragment.setOnTextEditorListener(object :
@@ -415,14 +438,17 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                     }
                 })
             }
+
             ToolType.ERASER -> {
                 mPhotoEditor.brushEraser()
                 mTxtCurrentTool.setText(R.string.label_eraser_mode)
             }
+
             ToolType.FILTER -> {
                 mTxtCurrentTool.setText(R.string.label_filter)
                 showFilter(true)
             }
+
             ToolType.EMOJI -> showBottomSheetDialogFragment(mEmojiBSFragment)
             ToolType.STICKER -> showBottomSheetDialogFragment(mStickerBSFragment)
         }

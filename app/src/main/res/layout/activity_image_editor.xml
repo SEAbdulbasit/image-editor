@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layout_bg">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/image_custom_shape"
+        android:contentDescription="editing"
+        android:scaleType="fitXY"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.RoundedCorner" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image_view"
+        android:layout_marginTop="18dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/flip_right_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_view"
+            android:layout_gravity="center"
+            android:layout_marginStart="108dp"
+            android:src="@drawable/spin_left_right_icon" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/flip_up_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_view"
+            android:layout_gravity="center"
+            android:layout_marginStart="27dp"
+            android:src="@drawable/spin_up_down_icon" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/rotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_view"
+            android:layout_gravity="center"
+            android:layout_marginStart="27dp"
+            android:src="@drawable/rotate_icon" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/square_crop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="27dp"
+            android:src="@drawable/square_crop_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/square_crop"
+            android:layout_marginStart="22dp"
+            android:text="Square"
+            android:textColor="@color/text_bg" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/circle_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="108dp"
+            android:src="@drawable/circle_crop_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/circle_image"
+            android:layout_marginStart="105dp"
+            android:text="Circle"
+            android:textColor="@color/text_bg" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/freehand_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="180dp"
+            android:src="@drawable/freehand_crop_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/freehand_image"
+            android:layout_marginStart="165dp"
+            android:text="Free Hand"
+            android:textColor="@color/text_bg" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/all_select_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="270dp"
+            android:src="@drawable/select_all_icon" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/all_select_image"
+            android:layout_marginStart="255dp"
+            android:text="Select All"
+            android:textColor="@color/text_bg" />
+        <Button
+            android:layout_width="wrap_content"
+            android:text="Go Next"
+            android:id="@+id/goNext"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

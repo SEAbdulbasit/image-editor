@@ -8,6 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ShapeAppearanceOverlay.RoundedCorner" parent="">
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

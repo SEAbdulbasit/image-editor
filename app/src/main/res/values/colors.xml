@@ -18,5 +18,6 @@
     <color name="yellow_green_color_picker">#C5E17A</color>
     <color name="tool_bg">#151414</color>
     <color name="semi_black_transparent">#99000000</color>
-
+    <color name="layout_bg">#F5F5F5</color>
+    <color name="text_bg">#A1A1A1</color>
 </resources>
